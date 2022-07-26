@@ -27,7 +27,7 @@ services:
       - 9092:9092
 
   debezium:
-    image: debezium/connect:0.9.0.Alpha2
+    image: debezium/connect:1.4
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
       GROUP_ID: 1
