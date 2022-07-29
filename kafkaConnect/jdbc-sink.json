@@ -1,18 +1,24 @@
 {
-    "name": "jdbc-sink",
+    "name": "oracle-sink",
     "config": {
-        "connector.class" : "io.debezium.connector.oracle.OracleConnector",
-        "tasks.max" : "1",
-        "database.server.name" : "dummy",
-        "database.hostname" : "127.0.0.1",
-        "database.port" : "1521",
-        "database.user" : "dummy",
-        "database.password" : "dummy",
-        "database.dbname" : "ORCLCDB",
-        "database.pdb.name" : "ORCLPDB1",
-        "database.out.server.name" : "dbzxout",
-        "database.history.kafka.bootstrap.servers" : "kafka:9092",
-        "database.history.kafka.topic": "postgres.public.student"
 
-    }
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector", 
+        "tasks.max": "1", 
+        "topics":"customers",
+        "connection.url": "jdbc:oracle:thin:@localhost:1521/ORCLCDB", 
+        "connection.user": "sys",
+        "connection.password":"Oradoc_db1",
+        "transforms": "unwrap",
+        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+        "transforms.unwrap.drop.tombstones": "false",
+        "auto.create":"true",
+        "insert.mode":"upsert",
+        "auto.evolve": false,
+        "max.retries": 10,
+        "retry.backoff.ms": 3000,
+        "pk.fields": "id",
+        "pk.mode":"record_value"
+        
+
+  }
 }
